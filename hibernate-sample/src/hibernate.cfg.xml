@@ -1,0 +1,52 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE hibernate-configuration SYSTEM 
+"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+   <session-factory>
+   
+      <property name = "hibernate.dialect">
+         org.hibernate.dialect.PostgreSQLDialect
+      </property>
+      
+      <property name = "hibernate.connection.driver_class">
+         org.postgresql.Driver
+      </property>
+      
+      <!-- Assume test is the database name -->
+      
+      <property name = "hibernate.connection.url">
+         jdbc:postgresql://localhost:5432/hibernatedb
+      </property>
+      
+      <property name = "hibernate.connection.username">
+         postgres
+      </property>
+      
+      <property name = "hibernate.connection.password">
+         Password
+      </property>
+      
+      <!-- JDBC connection pool settings ... using built-in test pool -->
+        <property name="connection.pool_size">1</property>
+        <!-- Select our SQL dialect -->
+        <property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+        <!-- <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/> </properties> -->
+        <!-- Echo the SQL to stdout -->
+        <property name="show_sql">true</property>
+        <!-- Set the current session context -->
+        <property name="current_session_context_class">thread</property>
+        <!-- Drop and re-create the database schema on startup -->
+        <!-- <property name="hibernate.hbm2ddl.auto">create</property> -->
+        <!-- will update if there is a change in model, else won't create everything from scratch -->
+        <property name="hibernate.hbm2ddl.auto">create-drop</property>
+        <!-- dbcp connection pool configuration -->
+        <property name="hibernate.dbcp.initialSize">5</property>
+        <property name="hibernate.dbcp.maxTotal">20</property>
+        <property name="hibernate.dbcp.maxIdle">10</property>
+        <property name="hibernate.dbcp.minIdle">5</property>
+        <property name="hibernate.dbcp.maxWaitMillis">-1</property>
+        <mapping class="org.tutorial.hibernate.model.UserDetails" />
+        <mapping class="org.tutorial.hibernate.model.Vehicle" />
+      
+   </session-factory>
+</hibernate-configuration>
