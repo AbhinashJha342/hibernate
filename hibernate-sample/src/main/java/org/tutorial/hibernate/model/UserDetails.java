@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -15,7 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.Lob;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -62,7 +61,8 @@ public class UserDetails {
 	//@OneToOne(cascade = {CascadeType.ALL})
 	//private Vehicle vehicle;
 	
-	
+	@OneToMany(mappedBy = "userDetails") // we don't want a separate table. we provide the same variable name which is mapped by @ManyToOne in the other class. 
+	private Collection<Vehicle> vehicles = new ArrayList<Vehicle>();
 	
 	public Collection<Address> getUserAddresses() {
 		return userAddresses;
@@ -93,6 +93,12 @@ public class UserDetails {
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	public Collection<Vehicle> getVehicles() {
+		return vehicles;
+	}
+	public void setVehicles(Collection<Vehicle> vehicles) {
+		this.vehicles = vehicles;
 	}
 	
 }
