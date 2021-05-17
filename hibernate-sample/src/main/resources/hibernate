@@ -1,0 +1,46 @@
+hibernate- 
+default file hibernate config file: hibernate.cfg.xml, location- src
+
+Postgree: /Library/PostgreSQL/13, port- 5432
+dialect- this specifies the way Hibernate would use to connect to db. It is SQL queries, but there are some changes in the way SQL connects to different dbs like MySql, Oracle , Postgres etc. and as Hibernate would run the queries, so is better to provide the dialect based on the db we are using.
+<property name="hbm2ddl.auto">create-drop</property> : Hibernate would create the table for us, in case is not already created, for the object that we need to save. the above property dictates that feature.
+<mapping class> - depending on the model classes we create we need to mention those model classes over here.
+Steps to use hibernate API:
+1. Create Session factory- is only one object per application. It creates sessions, depending on how many we want. This Session factory is generated using the hibernate cfg file.
+2. create sessions from session factory, whenever we need to create, save or other db operations.
+@Entity- has a property as name, @Entity(name="USER DETAILS"). In this case, hibernate would not create a table with class name , but with what is mentioned in name.
+@Column(name="USER_NAME")- same as name property for @Entity.
+We can replace the annotations from field name to the getter.
+-> If we don't wish to add any member variable to db, then we can make that field as transient or static and hibernate would not add that to db. @Transient is another annotation which can be added to ignore the member variable.
+When using date type, we can add an annotation as @Temporal, and specify only what we want to save. Date, time or timestamp. the default is timestamp.
+Add @Lob, add this to a property for which we need to have size more than of 255 characters, to specify hibernate to choose a valid datatype accordingly.
+-> Fetch value that is already inserted: 
+session = sessionFactory.openSession();
+session.beginTransaction();
+//to get the data from database. we passed 1 which is the primary key.
+user = session.get(UserDetails.class, 1);
+->How hibernate deals with primary keys:
+Natural key- a column which has a specific business value and can be a primary key(like email in registration form)
+surrogate key- something which doesn't serve a business value, but it only acts as a primary key(like a serial number column).
+Add @GeneratedValue, then Hibernate would generate that value for us, looking at the data type of the variable.
+-> @Embeddable- add this at class level to the class which is a member variable to other class.
+->@Embedded - add this to member variable which annotated as @Embeddable
+-> If we have a situation in which we need to use the Embedded object more than once, then we need to update the column names for other repeated objects to have distinct column names, if not, we will get the following error: Exception in thread "main" org.hibernate.MappingException: Repeated column in mapping for entity: org.tutorial.hibernate.model.UserDetails column: CITY (should be mapped with insert="false" update="false"). 
+We can use the annotations, @AttributeOverrides({@AttributeOverride}) to override different columns(member variables). Situation- employee have different addresses, one home and other office. So, in our employee class we can have two instances of Address class. So, for one of them we can use@AttributeOverrides({@AttributeOverride}) to differentiate. 
+@EmbeddedId if we want to add an embeddable object as a primary key.
+@ElementCollection- to treat a member variable as a list.
+T11- @JoinTable-> add this to the collection which is a member variable
+@CollectionID-> added to the collection member variable, and this takes some parameters, one of them is @Column, which basically defines the primary key of this collection.
+T14: Hibernate doesn't get all the list, if there is, once we get the object. It only fetches the list when we explicitly call for it. Hibernate has a proxy class, so when we call for any data , it doesn't get from db, but fetches that from a proxy class.In case we want to do an eager initialization, then where we have the @ElementCollection(fetch=FetchType.EAGER).Hibernate would still use proxy class, because there might be some lists which are not eagerly initialized.
+T13- One to One- only need to add @OneToOne for the variable that needs to have one to one mapping.update- @OneToOne(cascade = {CascadeType.ALL})
+ManyToMany- To have many-to-many relation, both the classes where we need to have that relation, needs to be annotated with @ManyToMany.In this case, there will be 2 tables created where this mapping would happen. In order to avoid this, we need to add @ManyToMany(mappedBy="Vehicle")// variable name. This would use the first table created, and not create a new one.
+When using @ManyToOne , suppose don't have any that data to which @ManyToOne is annotated, then Hibernate would throw an error. Example, our vehicle does not have an user, then hibernate would throw an error on startup. to avoid that we can add one more annotation- @NotFound(action=NotFoundAction.IGNORE) to @ManyToOne.
+
+hibernate Collections: Bag Semantics, Bag Semantics with ID(List/ArrayList). List Semantics - List/ArrayList. Set Semantics, Map Semantics.
+Error- object references an unsaved transient instance - save the transient instance before flushing : This happens when for ex: we have one @OneToMany relation in a object on other object. and if we haven't 
+saved that object on which we have the relation. In that case we get this error. To avoid, we need to have @ManyToMany(cascade=CascadeType.ALL)
+Single table strategy: IF we are implementing inheritance in our code, hibernate would by default create only one table and put the data(create new columns) in the base class table
+of the child class also. Hibernate generates a separate column called dType which is basically the class name(he base class and the sub-classes)
+
+
+ 

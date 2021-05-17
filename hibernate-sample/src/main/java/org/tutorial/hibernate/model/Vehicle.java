@@ -1,28 +1,49 @@
 package org.tutorial.hibernate.model;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 @Entity
 @Table(name = "VEHICLE")
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)	// added for T17 and T18 for inheritance
+@DiscriminatorColumn(
+		name="VEHICLE_TYPE",
+		discriminatorType=DiscriminatorType.STRING) // to change the name for auto-generated dType column.
 public class Vehicle {
 
 	@Id@GeneratedValue(strategy=GenerationType.AUTO)
-	private long vehicleID;
+	private Integer vehicleID;
 	private String vehicleName;
+	//@ManyToOne
+	//@JoinColumn(name="USER_ID") //rather than creating a new table, it will use the User_ID of User and create a column for that.
+	//private UserDetails userDetails; //user is a reserved keyword, and should not used. error: Error executing DDL "alter table VEHICLE drop constraint FKq9acqfnl2hkuhrm1la9gamh8f" via JDBC Statement
+	//@ManyToMany(cascade=CascadeType.ALL)
 	@ManyToOne
-	@JoinColumn(name="USER_ID") //rather than creating a new table, it will use the User_ID of User and create a column for that.
-	private UserDetails userDetails; //user is a reserved keyword, and should not used. error: Error executing DDL "alter table VEHICLE drop constraint FKq9acqfnl2hkuhrm1la9gamh8f" via JDBC Statement
+	@NotFound(action=NotFoundAction.IGNORE)
+	private UserDetails user;
+	
+	@ManyToMany(mappedBy = "vehicles") // to not create 2 tables
+	private Collection<UserDetails> userList = new ArrayList<UserDetails>();
 	
 	public long getVehicleID() {
 		return vehicleID;
 	}
-	public void setVehicleID(long vehicleID) {
+	public void setVehicleID(Integer vehicleID) {
 		this.vehicleID = vehicleID;
 	}
 	public String getVehicleName() {
@@ -31,10 +52,16 @@ public class Vehicle {
 	public void setVehicleName(String vehicleName) {
 		this.vehicleName = vehicleName;
 	}
-	public UserDetails getUserDetails() {
-		return userDetails;
+	public Collection<UserDetails> getUserList() {
+		return userList;
 	}
-	public void setUserDetails(UserDetails userDetails) {
-		this.userDetails = userDetails;
+	public void setUserList(Collection<UserDetails> userList) {
+		this.userList = userList;
+	}
+	public UserDetails getUser() {
+		return user;
+	}
+	public void setUser(UserDetails user) {
+		this.user = user;
 	}
 }

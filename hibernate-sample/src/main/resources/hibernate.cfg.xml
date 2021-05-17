@@ -47,6 +47,8 @@
         <property name="hibernate.dbcp.maxWaitMillis">-1</property>
         <mapping class="org.tutorial.hibernate.model.UserDetails" />
         <mapping class="org.tutorial.hibernate.model.Vehicle" />
+        <mapping class="org.tutorial.hibernate.model.TwoWheeler" />
+        <mapping class="org.tutorial.hibernate.model.FourWheeler" />
       
    </session-factory>
 </hibernate-configuration>
