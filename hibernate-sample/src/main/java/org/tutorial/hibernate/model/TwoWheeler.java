@@ -3,8 +3,8 @@ package org.tutorial.hibernate.model;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
-@Entity
-@DiscriminatorValue("Bike") // after using @DiscriminatorColumn in base class, we use this in subclasses to set the name for the overridden dType column
+@Entity(name = "TWO_WHEELER")
+//@DiscriminatorValue("Bike") // after using @DiscriminatorColumn in base class, we use this in subclasses to set the name for the overridden dType column
 public class TwoWheeler extends Vehicle {
 
 	private String steeringhandle;

@@ -20,10 +20,8 @@ import org.hibernate.annotations.NotFoundAction;
 
 @Entity
 @Table(name = "VEHICLE")
-@Inheritance(strategy=InheritanceType.SINGLE_TABLE)	// added for T17 and T18 for inheritance
-@DiscriminatorColumn(
-		name="VEHICLE_TYPE",
-		discriminatorType=DiscriminatorType.STRING) // to change the name for auto-generated dType column.
+@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)	// added for T17 and T18 for inheritance
+//@DiscriminatorColumn(name="VEHICLE_TYPE", discriminatorType=DiscriminatorType.STRING) // to change the name for auto-generated dType column.
 public class Vehicle {
 
 	@Id@GeneratedValue(strategy=GenerationType.AUTO)

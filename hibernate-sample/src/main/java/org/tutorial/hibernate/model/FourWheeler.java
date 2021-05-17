@@ -3,8 +3,8 @@ package org.tutorial.hibernate.model;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
-@Entity
-@DiscriminatorValue("Car")
+@Entity(name = "FOUR_WHEELER")
+//@DiscriminatorValue("Car")
 public class FourWheeler extends Vehicle {
 
 	private String steeringWheel;
