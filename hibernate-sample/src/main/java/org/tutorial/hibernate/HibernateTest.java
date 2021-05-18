@@ -21,14 +21,14 @@ public class HibernateTest {
 		session.beginTransaction();
 		
 		//Query query = session.createQuery("from Vehicle");
-		Query query = session.createQuery("select vehicleName from Vehicle"); // this would return only the column associated with the member variable. 
+		Query query = session.createQuery("select vehicleID,vehicleName from Vehicle"); // this would return only the column associated with the member variable. 
 		//and the list will be a string as the member variable type.
 		//pagination
 		query.setFirstResult(3); // will start from the 4th index in the table.
 		query.setMaxResults(8); // sets the maximum number of data returned
-		List<String> myList = (List<String>) query.list();
-		for(String v : myList) {
-			System.out.println(v);
+		List<Object[]> myList = (List<Object[]>)query.list();
+		for(Object[] vehicle : myList) {
+			System.out.println(vehicle[0]+" "+vehicle[1]);
 		}
 		System.out.println(myList.size());
 		//once save is done, we need to end the transaction.
