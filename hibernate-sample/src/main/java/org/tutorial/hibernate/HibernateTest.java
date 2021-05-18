@@ -64,6 +64,7 @@ public class HibernateTest {
 		session = sessionFactory.openSession();
 		session.beginTransaction();
 		
+		
 		Vehicle vehicle = session.get(Vehicle.class, 2);
 		vehicle.getUserList();
 		session.getTransaction().commit();
