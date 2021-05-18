@@ -45,7 +45,7 @@ Table per class strategy is not very efficient, as it might be the case when som
 T24: To update an Entity, hibernate has an update method, which takes in the entity object as the argument. we can move an object back to persistent state from transient state, if we do an update on the object that was previously in persistent.
 But, if there are no updates on that object then we can use the Entity annotation from hibernate and pass in an argument. @Entity(selectBeforeUpdate=true). This would do a select when we do an update
 call, and compare if the updated object is same or not than the one got from select query. and based on that do an update or not.
-HQL-
+HQL- basic query: session.createQuery("from UserDetails"); where UserDetails is not the table name but the entity class name.
 
 
 
