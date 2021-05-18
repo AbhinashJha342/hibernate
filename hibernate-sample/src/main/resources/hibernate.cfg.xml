@@ -38,7 +38,7 @@
         <!-- Drop and re-create the database schema on startup -->
         <!-- <property name="hibernate.hbm2ddl.auto">create</property> -->
         <!-- will update if there is a change in model, else won't create everything from scratch -->
-        <property name="hibernate.hbm2ddl.auto">create-drop</property>
+        <property name="hibernate.hbm2ddl.auto">update</property>
         <!-- dbcp connection pool configuration -->
         <property name="hibernate.dbcp.initialSize">5</property>
         <property name="hibernate.dbcp.maxTotal">20</property>

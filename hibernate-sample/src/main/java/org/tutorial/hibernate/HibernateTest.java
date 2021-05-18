@@ -1,12 +1,11 @@
 package org.tutorial.hibernate;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.tutorial.hibernate.model.Address;
-import org.tutorial.hibernate.model.FourWheeler;
-import org.tutorial.hibernate.model.TwoWheeler;
-import org.tutorial.hibernate.model.UserDetails;
+import org.hibernate.query.Query;
 import org.tutorial.hibernate.model.Vehicle;
 
 public class HibernateTest {
@@ -21,6 +20,17 @@ public class HibernateTest {
 		//before saving data in db, we need to open a transaction
 		session.beginTransaction();
 		
+		//Query query = session.createQuery("from Vehicle");
+		Query query = session.createQuery("select vehicleName from Vehicle"); // this would return only the column associated with the member variable. 
+		//and the list will be a string as the member variable type.
+		//pagination
+		query.setFirstResult(3); // will start from the 4th index in the table.
+		query.setMaxResults(8); // sets the maximum number of data returned
+		List<String> myList = (List<String>) query.list();
+		for(String v : myList) {
+			System.out.println(v);
+		}
+		System.out.println(myList.size());
 		//once save is done, we need to end the transaction.
 		session.getTransaction().commit();
 		//ideally below should in finally block.
