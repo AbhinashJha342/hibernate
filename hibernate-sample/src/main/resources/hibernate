@@ -41,6 +41,6 @@ Error- object references an unsaved transient instance - save the transient inst
 saved that object on which we have the relation. In that case we get this error. To avoid, we need to have @ManyToMany(cascade=CascadeType.ALL)
 Single table strategy: IF we are implementing inheritance in our code, hibernate would by default create only one table and put the data(create new columns) in the base class table
 of the child class also. Hibernate generates a separate column called dType which is basically the class name(he base class and the sub-classes)
-
+Table per class strategy is not very efficient, as it might be the case when some columns are empty because there might be some property that are not required in sub class, but are required in base class.
 
  
