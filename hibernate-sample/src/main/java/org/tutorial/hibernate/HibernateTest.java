@@ -20,11 +20,11 @@ public class HibernateTest {
 		//before saving data in db, we need to open a transaction
 		session.beginTransaction();
 		
-		String minUserId = "3";
+		String minVehicleId = "3";
 		String vehicleName = "Accord";
-		Query query = session.createQuery("from Vehicle where vehicleID > ?0 and vehicleName = ?1");
-		query.setInteger(0, Integer.parseInt(minUserId));
-		query.setString(1, vehicleName);
+		Query query = session.createQuery("from Vehicle where vehicleID > :minVehicleId and vehicleName = :vehicleName");
+		query.setInteger("minVehicleId", Integer.parseInt(minVehicleId));
+		query.setString("vehicleName", vehicleName);
 		
 		//once save is done, we need to end the transaction.
 		session.getTransaction().commit();
