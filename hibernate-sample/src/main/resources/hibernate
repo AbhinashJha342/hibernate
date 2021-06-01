@@ -52,6 +52,14 @@ Criteria API- We can do something like this- criteria.add(Restrictions.eq("userN
 We can use following for Or condition: - Restrictions.or(criteria1, criteria2)
 criteria.add(Restrictions.or(Restrictions.between(null, session, criteria), Restrictions.between(null, session, criteria)));
 Projections- for aggregation or any grouping functions.
+Criteria criteria = session.createCriteria(UserDetails.class)
+				.setProjection(Projections.property("userId"));
+criteria.list(); // this will not be a list of UserDetails, but only the list of the property that has been requested,i.e, the argument passed in .property
+
+Two points to note about projections:
+1.) it doesn't consider primary key
+2.)doesn't consider null values.
+
 
 
 //hibernate interview questions- https://www.youtube.com/watch?v=nb4kKVDc4cE

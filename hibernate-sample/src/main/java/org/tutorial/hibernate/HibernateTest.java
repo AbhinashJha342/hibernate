@@ -6,6 +6,8 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.criterion.Example;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.query.Query;
 import org.tutorial.hibernate.model.Address;
@@ -61,7 +63,14 @@ public class HibernateTest {
 		session.save(newUser1);
 		session.save(newUser2);
 		//using Criteria API
-		Criteria criteria = session.createCriteria(UserDetails.class);
+		UserDetails exampleUser = new UserDetails();
+		exampleUser.setUserName("%A%");
+		
+		Example example = Example.create(exampleUser).excludeProperty("userName"); // this is for the case when we want to exclude any property. We can chain then using many exclude property.
+		Criteria criteria = session.createCriteria(UserDetails.class)
+							.add(example);
+		
+		//this would return a list of UserDtails, but only one element with UserName as Alicia. we can use wildcard here as well.
 		
 		//once save is done, we need to end the transaction.
 		session.getTransaction().commit();
