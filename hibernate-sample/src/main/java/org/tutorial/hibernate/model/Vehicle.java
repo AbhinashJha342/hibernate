@@ -3,6 +3,8 @@ package org.tutorial.hibernate.model;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,10 +19,12 @@ import javax.persistence.Table;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
+
+//@NamedNativeQuery(name="Vehicle.byName", query="select * from Vehicle where vehiclename=?0", resultClass=Vehicle.class) // as we using the native query so we need to specify to which class should the query result be mapped to
 @Entity
 @Table(name = "VEHICLE")
 //@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)	// added for T17 and T18 for inheritance
-//@DiscriminatorColumn(name="VEHICLE_TYPE", discriminatorType=DiscriminatorType.STRING) // to change the name for auto-generated dType column.
+@DiscriminatorColumn(name="VEHICLE_TYPE", discriminatorType=DiscriminatorType.STRING) // to change the name for auto-generated dType column.
 @Inheritance(strategy=InheritanceType.JOINED) // we use this strategy to create a new table and remove any extra null values that we get by simple TABLE_PER_CLASS strategy
 public class Vehicle {
 

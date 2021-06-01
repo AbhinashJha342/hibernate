@@ -16,6 +16,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedNativeQuery;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -25,7 +27,10 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 @Entity
+@NamedQuery(name="UserDetails.byID", query = "from UserDetails where userId = ?0")
+@NamedNativeQuery(name="UserDetails.byName", query="select * from user_details where username=?0", resultClass=UserDetails.class)
 @Table(name="USER_DETAILS")
+@org.hibernate.annotations.Entity(selectBeforeUpdate=true)
 public class UserDetails {
 
 	@Id @GeneratedValue(strategy=GenerationType.AUTO) //default column name= UserDetails_userId
