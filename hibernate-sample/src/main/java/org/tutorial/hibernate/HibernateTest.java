@@ -62,23 +62,6 @@ public class HibernateTest {
 		session.save(newUser2);
 		//using Criteria API
 		Criteria criteria = session.createCriteria(UserDetails.class);
-		criteria.add(Restrictions.eq("userName", "Abhinash"));
-		
-		//Query query = session.getNamedQuery("UserDetails.byID");
-		//query.setInteger(0,1);
-		
-		List<UserDetails> userDeatils = (List<UserDetails>)criteria.list();
-		for(UserDetails user : userDeatils) {
-			System.out.println("########"+user.getUserId());
-		}
-		
-		Query query1 = session.getNamedQuery("UserDetails.byName");
-		query1.setString(0, "Alicia");
-		
-		List<UserDetails> userDeatils1 = (List<UserDetails>)query1.list();
-		for(UserDetails user : userDeatils1) {
-			System.out.println("******"+user.getUserName());
-		}
 		
 		//once save is done, we need to end the transaction.
 		session.getTransaction().commit();

@@ -48,9 +48,10 @@ call, and compare if the updated object is same or not than the one got from sel
 HQL- basic query: session.createQuery("from UserDetails"); where UserDetails is not the table name but the entity class name. in the queries, even if using where clauses, we need to provide the entity
 class member variables and not the column names.
 
-
-
-
+Criteria API- We can do something like this- criteria.add(Restrictions.eq("userName", "Abhinash")).add(<<condition>>).add(<<condition>>); to chain the restrictions.
+We can use following for Or condition: - Restrictions.or(criteria1, criteria2)
+criteria.add(Restrictions.or(Restrictions.between(null, session, criteria), Restrictions.between(null, session, criteria)));
+Projections- for aggregation or any grouping functions.
 
 
 //hibernate interview questions- https://www.youtube.com/watch?v=nb4kKVDc4cE
